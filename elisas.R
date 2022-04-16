@@ -18,9 +18,10 @@ baseline <- data$curve[8]
 data <- data[-c(8), ]
 data[c(1, 3:7)] <- data[c(1,3:7)] - baseline
 
-model <- lm(curve ~ conc, data = data)
+model <- lm(curve ~ 0 + conc, data = data)
 # contrations are stored in dataframe 'concentration'
-concentration =  (data[1:NUM_OF_REPLICATES, 3:(NUM_OF_GROUPS+2)] - model$coefficients[1]) / model$coefficients[2]
+concentration =  data[1:NUM_OF_REPLICATES, 3:(NUM_OF_GROUPS+2)] / model$coefficients # if force fit through origin
+# concentration =  (data[1:NUM_OF_REPLICATES, 3:(NUM_OF_GROUPS+2)] - model$coefficients[1]) / model$coefficients[2] # if not forces through origin
 melted <- melt(concentration)
 
 # Plot the standard curve and linear fit
